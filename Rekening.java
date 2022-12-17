@@ -1,4 +1,4 @@
-public class Rekening {
+public class Rekening implements Informasi{
     private String name;
     private int Telp;
     private double UangSetor;
@@ -27,7 +27,15 @@ public class Rekening {
         this.NamaTagihan = NamaTagihan;
     }
 
+    @Override
+    final public void informasiIn() {
+        System.out.println("Alert!!! Masukan inputan sesuai dengan ketentuan");
+    }
 
+    @Override
+    final public void informasiExit() {
+        System.out.println("Program Telah Selesai Berjalan, Terima Kasih Telah Mencoba");
+    }
 
     public void setTelp(int telp) {
         Telp = telp;
