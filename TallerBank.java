@@ -40,6 +40,8 @@ public class TallerBank {
             switch (pilih){
                 //jika memilih 1
                 case 1:
+                    
+                    data.informasiIn();
                     System.out.println(" ====Setor Uang==== ");
                     System.out.print(" Silahkan Masukan Nomer Rekening Anda ");
                     double NORek = in.nextDouble();
@@ -56,7 +58,8 @@ public class TallerBank {
                     break;
 
                 case 2 :
-
+                    
+                    data.informasiIn();
                     System.out.println("===Pengambilan Uang===");
                     System.out.print(" Masukan Nomer Rekening : ");
                     double NoRek = in.nextDouble();
@@ -73,7 +76,8 @@ public class TallerBank {
 
                     break;
                 case 3 :
-
+                    
+                    data.informasiIn();
                     System.out.println("===Transfer===");
                     System.out.print(" Masukan Nomer Rekening : ");
                     double NOrek = in.nextDouble();
@@ -103,6 +107,7 @@ public class TallerBank {
 
 
                 case 4:
+                    data.informasiExit();
                     System.exit(0);
                     break;
             }
