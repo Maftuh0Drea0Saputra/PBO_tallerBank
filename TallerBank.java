@@ -1,10 +1,13 @@
+import java.io.PrintWriter;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
 
 public class TallerBank {
 
 
     public static void main (String []args) {
         Scanner in = new Scanner(System.in);
+        java.io.File txt = new java.io.File("struk.txt");
 
 
         System.out.print(" Masukan nama Anda : ");
@@ -22,7 +25,6 @@ public class TallerBank {
 
 
         while (true) {
-            int saldoAwal = 5000000;
             System.out.println("---Bank Makmur Jaya---");
             System.out.println(" 1. Setor Uang");
             System.out.println(" 2. Ambil Uang");
@@ -38,10 +40,10 @@ public class TallerBank {
             //proses dan output
 
             switch (pilih){
-                //jika memilih 1
+
                 case 1:
-                    
                     data.informasiIn();
+
                     System.out.println(" ====Setor Uang==== ");
                     System.out.print(" Silahkan Masukan Nomer Rekening Anda ");
                     double NORek = in.nextDouble();
@@ -49,17 +51,19 @@ public class TallerBank {
                     double Setoran = in.nextDouble();
                     System.out.println();
 
-                    setorTunai Atm = new setorTunai (NORek, Setoran);
+                    data.tambahSaldo(Setoran);
                     System.out.println("=================================");
                     System.out.println(" Nomer Rekening anda : "+NORek);
                     System.out.println(" Jumlah uang yang akan di setor  : "+Setoran);
-                    System.out.println(" Saldo anda adalah : "+ Atm.MenghitungTabungan(saldoAwal));
+                    System.out.println(" Saldo anda adalah : "+ data.getSaldo());
                     System.out.println();
+
+
                     break;
 
                 case 2 :
-                    
                     data.informasiIn();
+
                     System.out.println("===Pengambilan Uang===");
                     System.out.print(" Masukan Nomer Rekening : ");
                     double NoRek = in.nextDouble();
@@ -67,42 +71,50 @@ public class TallerBank {
                     double UangDiTarik = in.nextDouble();
                     System.out.println();
 
-                    System.out.println("=================================");
-                    System.out.println(" Masukan Nomer Rekening     : "+NoRek);
-                    System.out.println(" Masukan Jumlah Pengambilan    : "+UangDiTarik);
-                    ambilTunai AtmB = new ambilTunai(NoRek, (int) UangDiTarik);
-                    System.out.println(" Saldo anda adalah : "+ AtmB.MenghitungSaldoPenarikanUang(saldoAwal));
-                    System.out.println();
+                    double hasilA = data.ambilTunai(UangDiTarik);
+                    if (hasilA > 0) {
+                        System.out.println("=================================");
+                        System.out.println(" Masukan Nomer Rekening     : "+NoRek);
+                        System.out.println(" Masukan Jumlah Pengambilan    : "+UangDiTarik);
+                        System.out.println(" Saldo anda adalah : "+ data.getSaldo());
+                        System.out.println();
+                    }
 
                     break;
                 case 3 :
-                    
                     data.informasiIn();
-                    System.out.println("===Transfer===");
-                    System.out.print(" Masukan Nomer Rekening : ");
-                    double NOrek = in.nextDouble();
+                    Wifi tag1 = new Wifi();
 
+                    System.out.println("===Tagihan===");
                     System.out.println(" Jenis Tagihan Pembayaran ");
                     System.out.println(" 1. Tagihan Wifi");
-                    Wifi tag1 = new Wifi();
-                    tag1.detail();
-
-
-                    System.out.print(" Masukan Jenis Tagihan : ");
-                    int Tagihan1 = in.nextInt();
-                    System.out.print(" Masukan jumlah Pembayaran : ");
-                    double JumlahTransfer = in.nextDouble();
 
 
 
-                    Tagihan AtmC = new Tagihan(NOrek, JumlahTransfer, Tagihan1);
-                    System.out.println("=================================");
-                    System.out.println(" No Rekening anda  : "+NOrek);
-                    System.out.println(" Nama Tagihan yang di pilih : "+ Tagihan1);
-                    System.out.println(" Jumlah Pembayaran : "+ JumlahTransfer);
-                    System.out.println(" Saldo : "+ AtmC.MenghitungTransferUang(saldoAwal));
-                    System.out.println();
+                    System.out.print("\n Masukan Jenis Tagihan : ");
+                    double Tagihan1 = in.nextDouble();
 
+                    if (Tagihan1 == 1){
+                        tag1.detail();
+                        double wifi = 150000;
+                        double hasilT = data.tagihan(wifi);
+                        if (hasilT > 0) {
+                            System.out.println("=================================");
+                            System.out.println(" Jumlah Pembayaran  : "+wifi);
+                            System.out.println(" Saldo anda adalah : "+ data.getSaldo());
+                            System.out.println();
+                        }
+                        try{
+                            java.io.PrintWriter tag = new java.io.PrintWriter(txt);
+                            tag.println ("||======= Tagihan Wifi ========");
+                            tag.println ("|| Jumlah Pembayaran : "+wifi);
+                            tag.println ("|| Saldo anda adalah : "+ data.getSaldo());
+                            tag.println();
+                            tag.close();
+                        }catch (FileNotFoundException e){
+                            e.printStackTrace();
+                        }
+                    }
                     break;
 
 
